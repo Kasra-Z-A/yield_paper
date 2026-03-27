@@ -1,0 +1,348 @@
+---
+title: "Yield Aggregator Analysis Plots"
+output: pdf_document
+date: "2025-11-19"
+---
+```{r setup, include=FALSE}
+library(ggplot2)
+library(data.table)
+library(dplyr)
+library(magrittr)
+library(lubridate)
+library(ggpubr)
+library(ggrepel)
+library(tidyr)
+theme_set(theme_pubr())
+dir.create("./figures", showWarnings = FALSE)
+```
+## Cumulative Distribution Function (CDF) Plots
+```{r}
+cian_deposits_cumul <- read.csv("../results/raw_data/cian_deposits.csv") %>% as.data.table()
+cian_withdrawals_cumul <- read.csv("../results/raw_data/cian_withdrawals.csv") %>% as.data.table()
+yearn_deposits_cumul <- read.csv("../results/raw_data/yearn_deposits.csv") %>% as.data.table()
+yearn_withdrawals_cumul <- read.csv("../results/raw_data/yearn_withdrawals.csv") %>% as.data.table()
+
+# Cian exports use value_usd; Yearn exports use value (already in USD)
+cian_deposits_cdf <- cian_deposits_cumul[value_usd > 0][order(value_usd)]
+cian_deposits_cdf[, cumulative_prob := (1:.N)/.N]
+
+cian_withdrawals_cdf <- cian_withdrawals_cumul[value_usd > 0][order(value_usd)]
+cian_withdrawals_cdf[, cumulative_prob := (1:.N)/.N]
+
+yearn_deposits_cdf <- yearn_deposits_cumul[value > 0][order(value)]
+yearn_deposits_cdf[, cumulative_prob := (1:.N)/.N]
+
+yearn_withdrawals_cdf <- yearn_withdrawals_cumul[value > 0][order(value)]
+yearn_withdrawals_cdf[, cumulative_prob := (1:.N)/.N]
+```
+## CDF Plots by Protocol
+```{r echo=FALSE}
+pl_yearn_cdf <- ggplot() +
+  geom_vline(xintercept = c(0.00001, 0.0001, 0.001, 0.01), color = "grey92", linewidth = 0.5) +
+  geom_line(data = yearn_deposits_cdf, aes(x = value, y = cumulative_prob, color = "Deposits"), linewidth = 1) +
+  geom_line(data = yearn_withdrawals_cdf, aes(x = value, y = cumulative_prob, color = "Withdrawals"), linewidth = 1) +
+  scale_x_log10(
+    breaks = c(0.1, 1, 10, 100, 1000, 10000, 100000, 1000000),
+    labels = c("0.1", "1", "10", "100", "1K", "10K", "100K", "1M")
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, 0.2)
+  ) +
+  scale_color_manual(
+    name = "Type",
+    values = c("Deposits" = "#3B4CC0", "Withdrawals" = "#1B5E20")
+  ) + 
+  theme_bw(base_size = 12) +
+  theme(
+    legend.position = c(0.1, 0.9), 
+    legend.justification = c(0, 1),
+    panel.grid.minor = element_blank()
+  ) +
+  labs(x = "Transaction Amount [USD]", y = "Cumulative Probability (Yearn)") 
+
+pl_cian_cdf <- ggplot() +
+  geom_line(data = cian_deposits_cdf, aes(x = value_usd, y = cumulative_prob, color = "Deposits"), linewidth = 1) +
+  geom_line(data = cian_withdrawals_cdf, aes(x = value_usd, y = cumulative_prob, color = "Withdrawals"), linewidth = 1) +
+  scale_x_log10(
+    breaks = c(100, 1000, 10000, 100000, 1000000, 10000000),
+    labels = c("100", "1K", "10K", "100K", "1M", "10M")
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, 0.2)
+  ) +
+  scale_color_manual(
+    name = "Type",
+    values = c("Deposits" = "#3B4CC0", "Withdrawals" = "#1B5E20")
+  ) + 
+  theme_bw(base_size = 12) +
+  theme(
+    legend.position = c(0.1, 0.9), 
+    legend.justification = c(0, 1),
+    panel.grid.minor = element_blank()
+  ) +
+  labs(x = "Transaction Amount [USD]", y = "Cumulative Probability (Cian)")
+
+pl_cdf_combined <- ggarrange(pl_yearn_cdf, pl_cian_cdf, 
+                            ncol = 1, nrow = 2)
+pl_cdf_combined
+```
+```{r}
+ggsave(
+   filename = paste0("./figures/", "cdf_combined", ".pdf"),
+   plot = pl_cdf_combined, 
+   width = 10, height = 8
+)
+```
+```{r}
+yearn_exchange_rate <- read.csv("../results/raw_data/yearn_exchange_rate.csv") %>% as.data.table()
+yearn_exchange_rate$dt <- as.POSIXct(yearn_exchange_rate$datetime)
+yearn_exchange_rate[, exchange_rate := Exchange_Rate_USDC_per_Share]
+```
+```{r echo=FALSE}
+pl_yearn_exchange <- ggplot(yearn_exchange_rate, aes(x = dt, y = exchange_rate, color = "Exchange Rate")) +
+  geom_line(linewidth = 1) +
+  scale_x_datetime(
+    limits = as.POSIXct(c("2024-05-01", "2025-05-01"))
+  ) +
+  scale_y_continuous(
+    labels = scales::label_number(accuracy = 0.001)
+  ) +
+  scale_color_manual(
+    name = "Metric",
+    values = c("Exchange Rate" = "#1B5E20")
+  ) + 
+  theme_bw(base_size = 12) +
+  theme(legend.position = "none") +
+  labs(x = "Time [days]", y = "Yearn Exchange Rate") 
+pl_yearn_exchange
+```
+```{r}
+ggsave(
+   filename = paste0("./figures/", "yearn_exchange_rate", ".pdf"),
+   plot = pl_yearn_exchange, 
+   width = 10, height = 4
+)
+```
+```{r}
+cian_exchange_rate <- read.csv("../data/cian_exchange_price_df.csv") %>% as.data.table()
+cian_exchange_rate$dt <- as.POSIXct(cian_exchange_rate$datetime)
+```
+```{r echo=FALSE}
+pl_cian_exchange <- ggplot(cian_exchange_rate, aes(x = dt, y = exchange_price_eth, color = "Exchange Rate")) +
+  geom_line(linewidth = 1) +
+  scale_x_datetime(
+    limits = as.POSIXct(c("2024-05-01", "2025-05-01"))
+  ) +
+  scale_y_continuous(
+    labels = scales::label_number(accuracy = 0.001)
+  ) +
+  scale_color_manual(
+    name = "Metric",
+    values = c("Exchange Rate" = "#1B5E20")
+  ) + 
+  theme_bw(base_size = 12) +
+  theme(legend.position = "none") +
+  labs(x = "Time [days]", y = "Cian Exchange Rate") 
+pl_cian_exchange
+```
+```{r}
+ggsave(
+   filename = paste0("./figures/", "cian_exchange_rate", ".pdf"),
+   plot = pl_cian_exchange, 
+   width = 10, height = 4
+)
+```
+```{r}
+# Total deposits and total strategy investments from the analysis notebooks,
+# used for the side-by-side protocol comparison bar chart.
+comparison_data <- data.table(
+  Protocol = rep(c("Yearn", "Cian"), each = 2),
+  Metric = rep(c("Total Deposits", "Total Investments"), 2),
+  Value = c(15663293, 13624423, 53996952, 53882810.50)
+)
+```
+```{r echo=FALSE}
+pl_comparison <- ggplot(comparison_data, aes(x = Protocol, y = Value, fill = Metric)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.8), width = 0.7) +
+  scale_y_continuous(
+    labels = scales::label_number(scale_cut = scales::cut_short_scale())
+  ) +
+  scale_fill_manual(
+    values = c("Total Deposits" = "#3B4CC0", "Total Investments" = "#B40426")
+  ) + 
+  theme_bw(base_size = 12) +
+  theme(legend.position = "right") +
+  labs(x = "Protocol", y = "Amount [USD]", title = "Protocol Comparison: Deposits vs Investments") 
+pl_comparison
+```
+```{r}
+ggsave(
+   filename = paste0("./figures/", "protocol_comparison", ".pdf"),
+   plot = pl_comparison, 
+   width = 10, height = 4
+)
+```
+```{r}
+# cian_net_deposits.csv columns: datetime, USD, ETH (daily cumulative net deposits)
+cian_deleveraged <- read.csv("../results/raw_data/cian_net_deposits.csv") %>% as.data.table()
+cian_deleveraged$dt <- as.POSIXct(cian_deleveraged$datetime)
+```
+```{r}
+# cian_deleveraged_assets.csv columns: datetime, Deleveraged_Cian_Assets, Net_Vault_Deposits
+cian_deleveraged_usd <- read.csv("../results/raw_data/cian_deleveraged_assets.csv") %>% as.data.table()
+cian_deleveraged_usd$dt <- as.POSIXct(cian_deleveraged_usd$datetime)
+setnames(cian_deleveraged_usd, 
+         old = c("Deleveraged_Cian_Assets", "Net_Vault_Deposits"),
+         new = c("Deleveraged_Assets_USD", "Net_Deposits_USD"))
+```
+```{r}
+cian_delev_combined <- merge(cian_deleveraged_usd, cian_deleveraged[, .(datetime, ETH)], by = "datetime", all = TRUE)
+cian_delev_combined$dt <- as.POSIXct(cian_delev_combined$datetime)
+setnames(cian_delev_combined, old = "ETH", new = "Net_Deposits_ETH")
+```
+```{r echo=FALSE}
+# Scale ETH axis to align with USD axis
+eth_max_delev <- max(cian_delev_combined$Net_Deposits_ETH, na.rm = TRUE)
+usd_max_delev <- max(c(cian_delev_combined$Deleveraged_Assets_USD, cian_delev_combined$Net_Deposits_USD), na.rm = TRUE)
+scale_factor_delev <- usd_max_delev / eth_max_delev
+
+pl_cian_delev_combined <- ggplot(cian_delev_combined, aes(x = dt)) +
+  geom_line(aes(y = Deleveraged_Assets_USD, color = "Deleveraged Investments (USD)"), linewidth = 1) +
+  geom_line(aes(y = Net_Deposits_USD, color = "Net Deposits (USD)"), linewidth = 1) +
+  geom_line(aes(y = Net_Deposits_ETH * scale_factor_delev, color = "Net Deposits (ETH)"), linewidth = 1) +
+  scale_x_datetime(
+    limits = as.POSIXct(c("2024-05-01", "2025-05-01"))
+  ) +
+  scale_y_continuous(
+    name = "USD",
+    labels = scales::label_number(scale_cut = scales::cut_short_scale()),
+    sec.axis = sec_axis(~ . / scale_factor_delev, 
+                        name = "ETH",
+                        labels = scales::label_number(scale_cut = scales::cut_short_scale()))
+  ) +
+  scale_color_manual(
+    name = "Metric",
+    values = c("Deleveraged Investments (USD)" = "#B40426", 
+               "Net Deposits (USD)" = "#3B4CC0",
+               "Net Deposits (ETH)" = "#F7B500")
+  ) + 
+  theme_bw(base_size = 12) +
+  theme(
+    legend.position = c(0.1, 0.9), 
+    legend.justification = c(0, 1),
+    axis.title.y = element_text(color = "black"),
+    axis.text.y = element_text(color = "black"),
+    axis.title.y.right = element_text(color = "#F7B500"),
+    axis.text.y.right = element_text(color = "#F7B500")
+  ) +
+  labs(x = "Time [days]") 
+pl_cian_delev_combined
+```
+```{r}
+ggsave(
+   filename = paste0("./figures/", "cian_deleveraged_combined", ".pdf"),
+   plot = pl_cian_delev_combined, 
+   width = 10, height = 4
+)
+```
+```{r}
+# yearn_net_deposits.csv columns: datetime, USDC (daily cumulative net deposits)
+yearn_data <- read.csv("../results/raw_data/yearn_net_deposits.csv") %>% as.data.table()
+yearn_data$dt <- as.POSIXct(yearn_data$datetime)
+```
+```{r}
+# yearn_strategy_flow.csv columns: datetime, Net_Flow_to_Strategies_USDC
+yearn_investments <- read.csv("../results/raw_data/yearn_strategy_flow.csv") %>% as.data.table()
+yearn_investments$dt <- as.POSIXct(yearn_investments$datetime)
+setnames(yearn_investments, old = "Net_Flow_to_Strategies_USDC", new = "Net_Flow_to_Strategies")
+```
+```{r}
+yearn_combined_data <- merge(yearn_data[, .(datetime, USDC)], 
+                              yearn_investments[, .(datetime, Net_Flow_to_Strategies)], 
+                              by = "datetime", all = TRUE)
+yearn_combined_data$dt <- as.POSIXct(yearn_combined_data$datetime)
+```
+```{r echo=FALSE}
+pl_yearn_combined <- ggplot(yearn_combined_data, aes(x = dt)) +
+  geom_line(aes(y = USDC, color = "Net Deposits"), linewidth = 1) +
+  geom_line(aes(y = Net_Flow_to_Strategies, color = "Net Investments"), linewidth = 1) +
+  scale_x_datetime(
+    limits = as.POSIXct(c("2024-05-01", "2025-05-01"))
+  ) +
+  scale_y_continuous(
+    labels = scales::label_number(scale_cut = scales::cut_short_scale()),
+  ) +
+  scale_color_manual(
+    name = "Metric",
+    values = c("Net Deposits" = "#3B4CC0", "Net Investments" = "#B40426")
+  ) + 
+  theme_bw(base_size = 12) +
+  theme(legend.position = c(0.1, 0.9), legend.justification = c(0, 1)) +
+  labs(x = "Time [days]", y = "Amount [USDC]") 
+pl_yearn_combined
+```
+```{r}
+ggsave(
+   filename = paste0("./figures/", "yearn_combined", ".pdf"),
+   plot = pl_yearn_combined, 
+   width = 10, height = 4
+)
+```
+```{r}
+# yearn_protocol_flows.csv columns: datetime, Compound, Aave, Morpho, Sky
+yearn_protocols <- read.csv("../results/raw_data/yearn_protocol_flows.csv") %>% as.data.table()
+yearn_protocols$dt <- as.POSIXct(yearn_protocols$datetime)
+```
+```{r}
+yearn_protocols[, week := floor_date(dt, unit = "week")]
+yearn_protocols_weekly <- yearn_protocols[, .(
+  Sky     = sum(Sky,      na.rm = TRUE),
+  Morpho  = sum(Morpho,   na.rm = TRUE),
+  Compound = sum(Compound, na.rm = TRUE),
+  Aave    = sum(Aave,     na.rm = TRUE)
+), by = week]
+
+yearn_protocols_long <- melt(yearn_protocols_weekly,
+                              id.vars = "week",
+                              measure.vars = c("Sky", "Morpho", "Compound", "Aave"),
+                              variable.name = "Protocol",
+                              value.name = "Investment")
+
+yearn_protocols_total <- yearn_protocols_long[, .(Total = sum(Investment)), by = week]
+```
+```{r echo=FALSE}
+pl_yearn_protocols_stacked <- ggplot() +
+  geom_bar(data = yearn_protocols_long, aes(x = week, y = Investment, fill = Protocol), 
+           stat = "identity", position = "stack", alpha = 0.8, width = 6 * 24 * 3600) +
+  geom_line(data = yearn_protocols_total, aes(x = week, y = Total, color = "Combined"), 
+            linewidth = 1.2) +
+  geom_point(data = yearn_protocols_total, aes(x = week, y = Total, color = "Combined"), 
+             size = 2) +
+  scale_x_datetime(
+    limits = as.POSIXct(c("2024-05-01", "2025-05-01"))
+  ) +
+  scale_y_continuous(
+    labels = scales::label_number(scale_cut = scales::cut_short_scale())
+  ) +
+  scale_fill_manual(
+    name = "Protocol",
+    values = c("Sky" = "#3B4CC0", "Morpho" = "#B40426", "Compound" = "#F7B500", "Aave" = "#1B5E20")
+  ) +
+  scale_color_manual(
+    name = "",
+    values = c("Combined" = "black")
+  ) +
+  theme_bw(base_size = 12) +
+  theme(legend.position = "right") +
+  labs(x = "Time [days]", y = "Net Investments [USDC]") 
+pl_yearn_protocols_stacked
+```
+```{r}
+ggsave(
+   filename = paste0("./figures/", "yearn_protocols_stacked", ".pdf"),
+   plot = pl_yearn_protocols_stacked, 
+   width = 10, height = 4
+)
+```

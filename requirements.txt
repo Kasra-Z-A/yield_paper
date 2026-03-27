@@ -1,0 +1,9 @@
+# Core dependencies
+pandas>=2.0.0
+matplotlib>=3.7.0
+numpy>=1.24.0
+networkx>=3.0
+
+# Optional dependencies for network visualization
+# For hierarchical layouts, install: brew install graphviz && pip install pygraphviz
+# pygraphviz>=1.11

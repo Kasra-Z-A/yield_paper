@@ -1,0 +1,404 @@
+{
+    "addresses": {
+        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
+            "name": "WETH",
+            "type": "token"
+        },
+        "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
+            "name": "DAI",
+            "type": "token"
+        },
+        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
+            "name": "USDC",
+            "type": "token"
+        },
+        "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D": {
+            "name": "Uniswap V2: Router",
+            "type": "contract"
+        },
+        "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F": {
+            "name": "SushiSwap: Router",
+            "type": "contract"
+        },
+        "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9": {
+            "name": "Aave: Lending Pool",
+            "type": "contract"
+        },
+        "0xdAC17F958D2ee523a2206206994597C13D831ec7": {
+            "name": "USDT",
+            "type": "token"
+        },
+        "0xbe53a109b494e5c9f97b9cd39fe969be68bf6204": {
+            "name": "Yearn\nVault",
+            "type": "contract"
+        },
+        "0xbdb97ec319c41c6fa383e94ece6bdf383dfc7be4": {
+            "name": "AaveV3\nLender",
+            "type": "contract"
+        },
+        "0x7ee351aa702c8fc735d77fb229b7676ac15d7c79": {
+            "name": "Compound\nV3Lender",
+            "type": "contract"
+        },
+        "0x459f99d7c83bc3653b1913b62d2978b1deda01b5": {
+            "name": "Yearn\nysUSDC",
+            "type": "contract"
+        },
+        "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2": {
+            "name": "Aave Pool V3",
+            "type": "contract"
+        },
+        "0x1400d5c76d0a630368c8548172e5130983aaa0ef": {
+            "name": "DebtAllocator",
+            "type": "contract"
+        },
+        "0x25f893276544d86a82b1ce407182836f45cb6673": {
+            "name": "Spark\nLender",
+            "type": "contract"
+        },
+        "0x98c23e9d8f34fefb1b7bd6a91b7ff122f4e16f5c": {
+            "name": "Aave",
+            "type": "contract"
+        },
+        "0xc13e21b648a5ee794902342038ff3adab66be987": {
+            "name": "Spark",
+            "type": "contract"
+        },
+        "0x43506849d7c04f9138d1a2050bbf3a0c054402dd": {
+            "name": "FiatTokenV2_2",
+            "type": "contract"
+        },
+        "0xbb51273d6c746910c7c06fe718f30c936170fed0": {
+            "name": "TokenizedStrategy",
+            "type": "contract"
+        },
+        "0x34339f94350ec5274ea44d0c37dae9e968c44081": {
+            "name": "Aave",
+            "type": "contract"
+        },
+        "0x7effd7b47bfd17e52fb7559d3f924201b9dbff3d": {
+            "name": "AToken",
+            "type": "contract"
+        },
+        "0x9336943ecd91c201d9ed5a21562b34aef710052f": {
+            "name": "SupplyLogic",
+            "type": "contract"
+        },
+        "0x72e95b8931767c79ba4eee721354d6e99a61d004": {
+            "name": "Aave",
+            "type": "contract"
+        },
+        "0x35d1b3f3d7966a1dfe207aa4514c12a259a0492b": {
+            "name": "Vat",
+            "type": "contract"
+        },
+        "0x197e90f9fad81970ba7976f33cbd77088e5d7cf7": {
+            "name": "Pot (Sky)",
+            "type": "contract"
+        },
+        "0xe7b67f44ea304dd7f6d215b13686637ff64cd2b2": {
+            "name": "RewardsController",
+            "type": "contract"
+        },
+        "0x0ee554f6a1f7a4cb4f82d4c124ddc2ad3e37fde1": {
+            "name": "RewardsController (Spark)",
+            "type": "contract"
+        },
+        "0xac725cb59d16c81061bdea61041a8a5e73da9ec6": {
+            "name": "VariableDebtToken",
+            "type": "contract"
+        },
+        "0xf5DcF1F6E4c661Cb28c27FfF88Adde3522Cfbe91": {
+            "name": "Spool Finance",
+            "type": "contract"
+        },
+        "0x90b8695edcdefafa678df6d819307573f7b1a18c": {
+            "name": "Yelay",
+            "type": "contract"
+        },
+        "0x33e52c206d584550193e642c8982f2fff6339994": {
+            "name": "Spool Finance Swapper",
+            "type": "contract"
+        },
+        "0x9008d19f58aabd9ed0d60971565aa8510560ab41": {
+            "name": "CoW Protocol",
+            "type": "contract"
+        },
+        "0x1104215963474a0fa0ac09f4e212ef7282f2a0bc": {
+            "name": "Zap (Yearn)",
+            "type": "contract"
+        },
+        "0x15633dc0ce383babc96fdcdabf08a29e87ce53e3": {
+            "name": "Yearn Router",
+            "type": "contract"
+        },
+        "0xc3d688b66703497daa19211eedff47f25384cdc3": {
+            "name": "Compound\nUSDC\nToken",
+            "type": "contract"
+        },
+        "0x37305b1cd40574e4c5ce33f8e8306be057fd7341": {
+            "name": "Sky",
+            "type": "EOA"
+        },
+        "0x377c3bd93f2a2984e1e7be6a5c22c525ed4a4815": {
+            "name": "Spark\nUSDC",
+            "type": "token"
+        },
+        "0xf766c7293f4e0265ddfa8369f78a808df8ac70c1": {
+            "name": "Aave V3\nLender",
+            "type": "contract"
+        },
+        "0x602da189f5ada033e9ac7096fc39c7f44a77e942": {
+            "name": "Yearn\nysUSDC",
+            "type": "contract"
+        },
+        "0x074134a2784f4f66b6ced6f68849382990ff3215": {
+            "name": "Morpho\nCompounder",
+            "type": "contract"
+        },
+        "0x694e47afd14a64661a04eee674fb331bcdef3737": {
+            "name": "Morpho\nCompounder",
+            "type": "contract"
+        },
+        "0xfB7C06DDd70C74ac2F68D0F947Be3b4C503e3D6c": {
+            "name": "DAI\nStrategy",
+            "type": "contract"
+        },
+        "0x522478B54046aB7197880F2626b74a96d45B9B02": { 
+            "name": "AaveV3\nLender",
+            "type": "contract"
+        },
+        "0xbeef01735c132ada46aa9aa4c54623caa92a64cb": { 
+            "name": "Meta\nMorpho",
+            "type": "contract"
+        },
+        "0xdd0f28e19C1780eb6396170735D45153D261490d": { 
+            "name": "Meta\nMorpho",
+            "type": "contract"
+        },
+        "0x0a59649758aa4d66e25f08dd01271e891fe52199": {
+            "name": "SkyUSDC",
+            "type": "contract"
+        },
+        "0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb": {
+            "name": "Morpho",
+            "type": "contract"
+        },
+        "0xB13aa2d0345b0439b064f26B82D8dCf3f508775d": {
+            "name": "Cian Vault",
+            "type": "contract"
+        },
+        "0x74a09653a083691711cf8215a6ab074bb4e99ef5": {
+            "name": "Renzo Protocol",
+            "type": "contract"
+        },
+        "0xd6813390a28c8e3bc0dc838a346bd48f98b6da6f": {
+            "name": "(Cian)\nStrategy\nAAVEV3\nEzETH",
+            "type": "token"
+        },
+        "0x93c4b944D05dfe6df7645A86cd2206016c51564D": {
+            "name": "EigenLayer\nstETH\nStrategies",
+            "type": "token"
+        },
+        "0xbaf5f3a05bd7af6f3a0bba207803bf77e2657c8f": {
+            "name": "Renzo\nProtocol",
+            "type": "token"
+        },
+        "0xdac6748cbb7cd9da1868eb7ad598273122f012db": {
+            "name": "Cian\nRedeem\nOperator",
+            "type": "token"
+        },
+        "0x125b367c16c5858f11e12948404f7a1371a0fda3": {
+            "name": "Renzo\nProtocol",
+            "type": "token"
+        },
+        "0x0b1981a9fcc24a445de15141390d3e46da0e425c": {
+            "name": "Renzo\nProtocol",
+            "type": "token"
+        },
+        "0x07833eadf87cd3079da281395f2fba24b61f90f7": {
+            "name": "Strategy\nAAVE_V3\nLIDO(Proxy)",
+            "type": "token"
+        },
+        "0xae7d8db82480e6d8e3873ecbf22cf17b3d8a7308": {
+            "name": "yvUSDC\ntoken",
+            "type": "token"
+        },
+        "0x2a1fbcb52ed4d9b23dad17e1e8aed4bb0e6079b8": {
+            "name": "Aave\ntoken\ninstance",
+            "type": "token"
+        },
+        "0x16388463d60ffe0661cf7f1f31a7d658ac790ff7": {
+            "name": "Yearn\nStrategist\nMultisig",
+            "type": "token"
+        },
+        "0xa1dc0b6a02ab091580dc57bdd5fe8a9e577e0842": {
+            "name": "Cian\nVault\nImplementation",
+            "type": "contract"
+        },
+        "0xae7ab96520de3a18e5e111b5eaab095312d7fe84": {
+            "name": "stETH\ntoken",
+            "type": "token"
+        },
+        "0x17144556fd3424edc8fc8a4c940b2d04936d17eb": {
+            "name": "stETH\nImplementation",
+            "type": "contract"
+        },
+        "0x63E8209CAa13bbA1838E3946a50d717071A28CFB": {
+            "name": "Berachain",
+            "type": "contract"
+        },
+        "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": {
+            "name": "Stargate",
+            "type": "contract"
+        },
+        "0xAb2F42FEd7F2C1aEd5CA8a20139313aBeA74790b": {
+            "name": "Uniswap\nylstETH",
+            "type": "token"
+        },
+        "0x7d585B0e27BBb3D981b7757115EC11F47c476994": {
+            "name": "EnsoShortcuts",
+            "type": "token"
+        },
+        "0x70bf6634ee8cb27d04478f184b9b8bb13e5f4710": {
+            "name": "0x\nSettler",
+            "type": "token"
+        },
+        "0x427bba37b4e6486b2de3b4678844edf1909ea56b": {
+            "name": "Gnosis\nSafe",
+            "type": "token"
+        },
+        "0x0000000000000000000000000000000000000000": {
+            "name": "Zero\nAddress",
+            "type": "contract"
+        },
+        "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0": {
+            "name": "wstETH\nToken",
+            "type": "contract"
+        },
+        "0x49d9409111a6363d82c4371ffa43faea660c917b": {
+            "name": "FlashLoan\nHelper",
+            "type": "contract"
+        },
+        "0x0b925ed163218f6662a35e0f0371ac234f9e9371": {
+            "name": "Aave\nEthereum\nwstETH",
+            "type": "contract"
+        },
+        "0xc035a7cf15375ce2706766804551791ad035e0c2": {
+            "name": "Aave\nEthereum\nLido\nwstETH",
+            "type": "contract"
+        },
+        "0x6774bcbd5cecef1336b5300fb5186a12ddd8b367": {
+            "name": "L1\nScroll\nMessenger",
+            "type": "contract"
+        },
+        "0x5efc9d10e42fb517456f4ac41eb5e2ebe42c8918": {
+            "name": "Renzo\nWithdraw\nQueue",
+            "type": "contract"
+        },
+        "0x74e5664394998f13b07af42446380acef637969f": {
+            "name": "Aave\nToken\nezETH",
+            "type": "contract"
+        },
+        "0xdc191a215c0bffb423ca27d49ae2b052840f364e": {
+            "name": "Strategy\nAAVE_V3\nLido",
+            "type": "contract"
+        },
+        "0x9191dc9e81bef6feea0dc4d6994d5392b898edf8": {
+            "name": "Strategy\nAAVE_V3\nLido",
+            "type": "contract"
+        },
+        "0xfa1fdbbd71b0aa16162d76914d69cd8cb3ef92da": {
+            "name": "Aave\nToken\nWETH",
+            "type": "contract"
+        },
+        "0x889edc2edab5f40e902b864ad4d7ade8e412f9b1": {
+            "name": "Lido\nstETH\nWithdrawal\nQueue",
+            "type": "contract"
+        },
+        "0xf2f305d14dcd8aaef887e0428b3c9534795d0d60": {
+            "name": "Deposit\nQueue",
+            "type": "contract"
+        },
+        "0x78524beeac12368e600457478738c233f436e9f6": {
+            "name": "Operator\nDelegator",
+            "type": "contract"
+        },
+        "0xfed44edf4560dc09271d3a7d514b843f789540a5": {
+            "name": "Strategy\nMellow\nSteakhouse",
+            "type": "contract"
+        },
+        "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073": {
+            "name": "Eigenlayer\nBeacon",
+            "type": "contract"
+        },
+        "0xb8ffc3cd6e7cf5a098a1c92f48009765b24088dc": {
+            "name": "Lido\nDAO",
+            "type": "contract"
+        },
+        "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425": {
+            "name": "Lido\nDAO\nImplementation",
+            "type": "contract"
+        },
+        "0x6d225e974fa404d25ffb84ed6e242ffa18ef6430": {
+            "name": "Eigenlayer\nPod\nImpl.",
+            "type": "contract"
+        },
+        "0x35fA164735182de50811E8e2E824cFb9B6118ac2": {
+            "name": "eETH\nToken",
+            "type": "token"
+        },
+        "0xbeef69ac7870777598a04b2bd4771c71212e6abc": {
+            "name": "Mellow\nRestaking\nVault",
+            "type": "token"
+        },
+        "0x565e722A41e2fAe78f80aF269C75731590c9Ee45": {
+            "name": "Swap\nHelper",
+            "type": "contract"
+        },
+        "0xba12222222228d8ba445958a75a0704d566bf2c8": {
+            "name": "Balancer\nVault",
+            "type": "contract"
+        },
+        "0x111111125421ca6dc452d289314280a0f8842a65": {
+            "name": "1Inch\nRouter",
+            "type": "contract"
+        },
+        "0x10586b992558c8f568585a0d42aa0d201f8bb806": {
+            "name": "Strategy\nDefault",
+            "type": "contract"
+        },
+        "0x0a9ea3a5a26ac80535046f0fd004523cf5c03bb5": {
+            "name": "Vault\n(Cian)",
+            "type": "contract"
+        },
+        "0xee0ba180e9bd145d5c73517591f8a55db2961aea": {
+            "name": "Gnosis\nSafe",
+            "type": "contract"
+        },
+        "0x4d5f47fa6a74757f35c14fd3a6ef8e3c9bc514e8": {
+            "name": "Aave\nWETH",
+            "type": "contract"
+        },
+        "0x85b78aca6deae198fbf201c82daf6ca21942acc6": {
+            "name": "Origin\nProtocol",
+            "type": "contract"
+        },
+        "0x3451b6b219478037a1ac572706627fc2bda1e812": {
+            "name": "1Inch\nDeployer",
+            "type": "contract"
+        },
+        "0xe37e799d5077682fa0a244d46e5649f71457bd09": {
+            "name": "1Inch",
+            "type": "contract"
+        },
+        "0x91b7d78BF92db564221f6B5AeE744D1727d1Dd1e": {
+            "name": "Aave\nWETH\nDebt",
+            "type": "contract"
+        },
+        "0xE439edd2625772AA635B437C099C607B6eb7d35f": {
+            "name": "Aave\nwstETH\nDebt",
+            "type": "contract"
+        }
+    }
+} 
