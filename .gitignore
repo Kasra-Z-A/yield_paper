@@ -48,6 +48,6 @@ env/
 Thumbs.db
 ehthumbs.db
 
-# Large raw transaction data (shared separately)
-data/yearn_transactions.csv
-data/cian_vault_transactions.csv
+# Large raw transaction data (tracked via Git LFS)
+# data/yearn_transactions.csv
+# data/cian_vault_transactions.csv
