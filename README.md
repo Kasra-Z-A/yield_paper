@@ -2,9 +2,7 @@
 
 This repository contains the data and analysis code accompanying the paper:
 
-> **[Paper Title]**
-> [Author(s)], [Year]
-> [Conference/Journal]
+See [`main_submission.pdf`](main_submission.pdf) for the full manuscript.
 
 ## Overview
 
