@@ -59,7 +59,7 @@ pl_yearn_cdf <- ggplot() +
     legend.justification = c(0, 1),
     panel.grid.minor = element_blank()
   ) +
-  labs(x = "Transaction Amount [USD]", y = "Cumulative Probability (Yearn)") 
+  labs(x = "Transaction Amount [USD]", y = "Cumulative Probability") 
 
 pl_cian_cdf <- ggplot() +
   geom_line(data = cian_deposits_cdf, aes(x = value_usd, y = cumulative_prob, color = "Deposits"), linewidth = 1) +
@@ -82,7 +82,7 @@ pl_cian_cdf <- ggplot() +
     legend.justification = c(0, 1),
     panel.grid.minor = element_blank()
   ) +
-  labs(x = "Transaction Amount [USD]", y = "Cumulative Probability (Cian)")
+  labs(x = "Transaction Amount [USD]", y = "Cumulative Probability")
 
 pl_cdf_combined <- ggarrange(pl_yearn_cdf, pl_cian_cdf, 
                             ncol = 1, nrow = 2)
@@ -115,7 +115,7 @@ pl_yearn_exchange <- ggplot(yearn_exchange_rate, aes(x = dt, y = exchange_rate, 
   ) + 
   theme_bw(base_size = 12) +
   theme(legend.position = "none") +
-  labs(x = "Time [days]", y = "Yearn Exchange Rate") 
+  labs(x = "Time [days]", y = "Exchange Rate (USDC)") 
 pl_yearn_exchange
 ```
 ```{r}
@@ -144,7 +144,7 @@ pl_cian_exchange <- ggplot(cian_exchange_rate, aes(x = dt, y = exchange_price_et
   ) + 
   theme_bw(base_size = 12) +
   theme(legend.position = "none") +
-  labs(x = "Time [days]", y = "Cian Exchange Rate") 
+  labs(x = "Time [days]", y = "Exchange Rate (ETH)") 
 pl_cian_exchange
 ```
 ```{r}
@@ -216,7 +216,7 @@ pl_cian_delev_combined <- ggplot(cian_delev_combined, aes(x = dt)) +
     limits = as.POSIXct(c("2024-05-01", "2025-05-01"))
   ) +
   scale_y_continuous(
-    name = "USD",
+    name = "Amount [USD]",
     labels = scales::label_number(scale_cut = scales::cut_short_scale()),
     sec.axis = sec_axis(~ . / scale_factor_delev, 
                         name = "ETH",
